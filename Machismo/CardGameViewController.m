@@ -7,8 +7,8 @@
 //
 
 #import "CardGameViewController.h"
-#import "Deck.h"
-#import "PlayingCardDeck.h"
+//#import "Deck.h"
+//#import "PlayingCardDeck.h"
 #import "CardMatchingGame.h"
 
 @interface CardGameViewController ()
@@ -48,7 +48,7 @@
 
 - (Deck *)createDeck
 {
-    return [[PlayingCardDeck alloc] init];
+    return nil;
 }
 - (IBAction)changeSlider:(id)sender
 {
