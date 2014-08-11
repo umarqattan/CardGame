@@ -18,8 +18,8 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UISegmentedControl *modeSelector;
 @property (weak, nonatomic) IBOutlet UILabel *flipDescription;
-
-
+@property (weak, nonatomic) IBOutlet UISlider *historySlider;
+@property (strong, nonatomic) NSMutableArray *flipHistory;
 
 @end
 
@@ -35,13 +35,39 @@
     return _game;
 }
 
+- (NSMutableArray *)flipHistory
+{
+    if(!_flipHistory)
+    {
+        _flipHistory = [NSMutableArray array];
+    }
+    return _flipHistory;
+                        
+}
+
+
 - (Deck *)createDeck
 {
     return [[PlayingCardDeck alloc] init];
 }
+- (IBAction)changeSlider:(id)sender
+{
+    int sliderValue;
+    sliderValue = lroundf(self.historySlider.value);
+    [self.historySlider setValue:sliderValue
+                        animated:NO];
+    if([self.flipHistory count])
+    {
+        self.flipDescription.alpha = (sliderValue+1 < [self.flipHistory count])? 0.6 : 1.0;
+        self.flipDescription.text = [self.flipHistory objectAtIndex:sliderValue];
+    }
+    
+}
 
-- (IBAction)touchDealButton:(id)sender {
+- (IBAction)touchDealButton:(id)sender
+{
     self.modeSelector.enabled = YES;
+    self.flipHistory = nil;
     self.game = nil;
     [self updateUI];
 }
@@ -59,7 +85,13 @@
     self.game.maxMatchingCards = [[sender titleForSegmentAtIndex:sender.selectedSegmentIndex] integerValue];
 }
 
-
+- (void)setSliderRange
+{
+    //sets discrete values for slider
+    int maxValue = [self.flipHistory count] - 1;
+    self.historySlider.maximumValue = maxValue;
+    [self.historySlider setValue:maxValue animated:YES];
+}
 - (void)updateUI
 {
     for (UIButton *cardButton in self.cardButtons) {
@@ -94,7 +126,15 @@
         {
             description = [NSString stringWithFormat:@"%@ don't match! %d point penalty.", description, -self.game.lastScore];
         }
+        
         self.flipDescription.text = description;
+        self.flipDescription.alpha = 1;
+        
+        if(![description isEqualToString:@""] && ![[self.flipHistory lastObject] isEqualToString:description])
+        {
+            [self.flipHistory addObject:description];
+            [self setSliderRange];
+        }
     }
 }
 
