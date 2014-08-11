@@ -419,7 +419,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <slider opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" minValue="0.0" maxValue="0.0" translatesAutoresizingMaskIntoConstraints="NO" id="oJa-f4-ofd">
-                                <rect key="frame" x="18" y="393" width="284" height="31"/>
+                                <rect key="frame" x="18" y="389" width="284" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <connections>
                                     <action selector="changeSlider:" destination="vXZ-lx-hvc" eventType="valueChanged" id="sB5-1f-Sfs"/>
