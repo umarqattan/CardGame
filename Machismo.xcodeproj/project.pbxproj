@@ -128,6 +128,8 @@
 			isa = PBXGroup;
 			children = (
 				E1400DFC19838AEE0078E928 /* Main.storyboard */,
+				E1400DFF19838AEE0078E928 /* CardGameViewController.h */,
+				E1400E0019838AEE0078E928 /* CardGameViewController.m */,
 				E1400E221983A9350078E928 /* Model */,
 				E1400E0219838AEE0078E928 /* Images.xcassets */,
 				E1400DF119838AEE0078E928 /* Supporting Files */,
@@ -179,8 +181,6 @@
 				E1400E271983AF530078E928 /* Deck.m */,
 				E1400E2C1984A8310078E928 /* CardMatchingGame.h */,
 				E1400E2D1984A8310078E928 /* CardMatchingGame.m */,
-				E1400DFF19838AEE0078E928 /* CardGameViewController.h */,
-				E1400E0019838AEE0078E928 /* CardGameViewController.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
