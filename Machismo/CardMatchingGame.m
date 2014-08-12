@@ -28,13 +28,12 @@
 
 - (NSUInteger)maxMatchingCards
 {
-    if(_maxMatchingCards < 2)
-    {
-        _maxMatchingCards = 2;
+    Card *card = [self.cards firstObject];
+    if (_maxMatchingCards < card.numberOfMatchingCards) {
+        _maxMatchingCards = card.numberOfMatchingCards;
     }
     return _maxMatchingCards;
 }
-
 
 - (instancetype)initWithCardCount:(NSUInteger)count
                         usingDeck:(Deck *)deck
@@ -56,10 +55,6 @@
     return self;
 }
 
-
-
-
-
 //#define MISMATCH_PENALTY 2
 static const int MISMATCH_PENALTY = 2;
 static const int MATCH_BONUS = 4;
@@ -69,43 +64,29 @@ static const int COST_TO_CHOOSE = 1;
 {
     Card *card = [self cardAtIndex:index];
     
-    if (!card.isMatched)
-    {
-        if (card.isChosen)
-        {
+    if (!card.isMatched) {
+        if (card.isChosen) {
             card.chosen = NO;
-        }
-        else
-        {
+        } else {
             NSMutableArray *otherCards = [NSMutableArray array];
-            // match against another card
-            for (Card *otherCard in self.cards)
-            {
-                if (otherCard.isChosen && !otherCard.isMatched)
-                {
+            for (Card *otherCard in self.cards) {
+                if (otherCard.isChosen && !otherCard.isMatched) {
                     [otherCards addObject:otherCard];
                 }
             }
-            
             self.lastScore = 0;
             self.lastChosenCards = [otherCards arrayByAddingObject:card];
-            if([otherCards count] + 1 == self.maxMatchingCards)
-            {
+            if ([otherCards count] + 1 == self.maxMatchingCards) {
                 int matchScore = [card match:otherCards];
-                if(matchScore)
-                {
+                if (matchScore) {
                     self.lastScore = matchScore * MATCH_BONUS;
                     card.matched = YES;
-                    for(Card *otherCard in otherCards)
-                    {
+                    for (Card *otherCard in otherCards) {
                         otherCard.matched = YES;
                     }
-                }
-                else
-                {
-                    self.lastScore = -MISMATCH_PENALTY;
-                    for(Card *otherCard in otherCards)
-                    {
+                } else {
+                    self.lastScore = - MISMATCH_PENALTY;
+                    for (Card *otherCard in otherCards) {
                         otherCard.chosen = NO;
                     }
                 }
